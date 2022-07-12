@@ -1,0 +1,133 @@
+/*CREATE DATABASE mwmcdb */
+
+CREATE TABLE Region (
+ 	regionID int not null PRIMARY key AUTO_INCREMENT,
+    regionName varchar(50) not null
+);
+CREATE TABLE District (
+ 	districtID int not null PRIMARY key AUTO_INCREMENT,
+    districtName varchar(50) not null,
+    districtRegion int not null
+);
+ALTER TABLE District
+ADD FOREIGN KEY (districtRegion) REFERENCES Region(regionID);
+
+CREATE TABLE Village (
+ 	villageID int not null PRIMARY key AUTO_INCREMENT,
+    villageName varchar(50) not null,
+    villageDistrict int not null
+);
+ALTER TABLE Village
+ADD FOREIGN KEY (villageDistrict) REFERENCES District(districtID);
+
+
+
+CREATE TABLE Vehicle (
+ 	vehicleID int not null PRIMARY key AUTO_INCREMENT,
+    vehicle_Plate_NO varchar(50) not null UNIQUE,
+    vehicle_Modal_Name varchar(60) not null
+);
+CREATE TABLE Drivers (
+ 	driverID int not null PRIMARY key AUTO_INCREMENT,
+    driverName varchar(80) not null ,
+    driverTell varchar(40) not null ,
+    dirver_Vehicle int not null UNIQUE
+);
+ALTER TABLE Drivers
+ADD FOREIGN KEY (dirver_Vehicle) REFERENCES Vehicle(vehicleID);
+
+
+CREATE TABLE Customer (
+ 	customerID int not null PRIMARY key AUTO_INCREMENT,
+    customerName varchar(80) not null ,
+    driverTell varchar(40) not null ,
+    customer_Village int not null,
+    username varchar(40) not null,
+    password varchar(110) not null,
+    customerStatus varchar(20) not null
+);
+ALTER TABLE Customer
+ADD FOREIGN KEY (customer_Village) REFERENCES village(villageID);
+
+
+CREATE TABLE Customer (
+ 	customerID int not null PRIMARY key AUTO_INCREMENT,
+    customerName varchar(80) not null ,
+    CustomerTell varchar(40) not null ,
+    customer_Village int not null,
+    Customerplan varchar(40) not null
+    username varchar(40) not null,
+    password varchar(110) not null,
+    customerStatus varchar(20) not null
+);
+ALTER TABLE Customer
+ADD FOREIGN KEY (customer_Village) REFERENCES village(villageID);
+
+CREATE TABLE Payment (
+ 	paymentID int not null PRIMARY key AUTO_INCREMENT,
+    paidCustomer int not null ,
+    amountPaid double(255,2) not null ,
+    paymentDate  date,
+    paymentStatus varchar(50) not null
+);
+ALTER TABLE Payment
+ADD FOREIGN KEY (paidCustomer) REFERENCES Customer(customerID);
+
+
+
+CREATE TABLE EmployeeCatagory (
+ 	catagoryID int not null PRIMARY key AUTO_INCREMENT,
+    catagoryName varchar(80) not null   
+);
+
+CREATE TABLE Employees (
+ 	employeeID int not null PRIMARY key AUTO_INCREMENT,
+    empolyeeName varchar(80) not null ,
+    empolyeeTell varchar(16) not null ,
+    employeeCatagory int not null,
+    employeeStatus varchar(40) not null
+
+    
+);
+ALTER TABLE Employees
+ADD FOREIGN KEY (employeeCatagory) REFERENCES EmployeeCatagory(catagoryID);
+
+CREATE TABLE Expenses (
+ 	expensesID int not null PRIMARY key AUTO_INCREMENT,
+    expenseType varchar(80) not null ,
+    expenseAmount double not null ,
+    expenseDate date
+    
+);
+
+
+CREATE TABLE Admin(
+    adminID int not null PRIMARY KEY AUTO_INCREMENT,
+    adminEmployee int not null UNIQUE,
+    userName varchar(60) not null,
+    adminPassword varchar(100) not null,
+    adminstatus varchar(40) not null
+    );
+    ALTER TABLE Admin
+    ADD FOREIGN KEY (adminEmployee) REFERENCES employees(employeeID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
